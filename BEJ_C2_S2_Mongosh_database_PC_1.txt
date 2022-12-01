@@ -1,0 +1,108 @@
+									***********BEJ_C2_S2_NOSQL_MONGODB_PC_1************
+
+>use adress_db
+<'switched to db adress_db'
+
+
+>db.createCollection("address")
+<{ ok: 1 }
+
+
+>show databases
+<abcd        40.00 KiB
+ admin       40.00 KiB
+ adress_db    8.00 KiB
+ config     108.00 KiB
+ local       40.00 KiB
+
+
+>db.address.insertOne({"houseNo":101,"street":"dive road","city":"NewYork","zipCode":12123})
+<{ acknowledged: true,
+  insertedId: ObjectId("6385e60c6406e007142d33e9") }
+
+
+>db.address.find()
+<{ _id: ObjectId("6385e60c6406e007142d33e9"),
+  houseNo: 101,
+  street: 'dive road',
+  city: 'NewYork',
+  zipCode: 12123 }
+
+
+>db.address.insertOne({houseNo: 23, streetName:"Main Dave Street", city:"New York", zipCode:7002})
+<{ acknowledged: true,
+  insertedId: ObjectId("6385e9b56406e007142d33ea") }
+
+
+>db.address.insertOne({houseNo: 98, streetName:"NH27", city:"Rochester", zipCode:7007})
+<{ acknowledged: true,
+  insertedId: ObjectId("6385e9d96406e007142d33eb") }
+
+
+>db.address.insertOne({houseNo: 43, streetName:"NH39", city:"Kingston", zipCode:7015})
+<{ acknowledged: true,
+  insertedId: ObjectId("6385e9e96406e007142d33ec") }
+
+
+>db.address.count()
+<4
+
+
+>db.address.find().pretty()
+<{ _id: ObjectId("6388e29b1071651dee210a47"),
+  houseNo: 98,
+  streetName: 'NH27',
+  city: 'Rochester',
+  zipCode: 7007 }
+{ _id: ObjectId("6388e2ad1071651dee210a48"),
+  houseNo: 43,
+  streetName: 'NH39',
+  city: 'Kingston',
+  zipCode: 7015 }
+{ _id: ObjectId("6388e2c21071651dee210a49"),
+  houseNo: 23,
+  streetName: 'Main Dave Street',
+  city: 'New York',
+  zipCode: 7002 }
+{ _id: ObjectId("6388e2ed1071651dee210a4a"),
+  houseNo: 101,
+  street: 'dive road',
+  city: 'NewYork',
+  zipCode: 12123
+}
+
+
+>db.address.find({city:"Rochester"}).pretty()
+<{ _id: ObjectId("6388e29b1071651dee210a47"),
+  houseNo: 98,
+  streetName: 'NH27',
+  city: 'Rochester',
+  zipCode: 7007 }
+
+
+>db.address.countDocuments({city:"New York"})
+<1
+
+
+>db.address.find({ $or: [ {city:"Rochester"},{city:"New York"},{city:"Kingston"}]}).pretty()
+<{ _id: ObjectId("6388e29b1071651dee210a47"),
+  houseNo: 98,
+  streetName: 'NH27',
+  city: 'Rochester',
+  zipCode: 7007 }
+{ _id: ObjectId("6388e2ad1071651dee210a48"),
+  houseNo: 43,
+  streetName: 'NH39',
+  city: 'Kingston',
+  zipCode: 7015 }
+{ _id: ObjectId("6388e2c21071651dee210a49"),
+  houseNo: 23,
+  streetName: 'Main Dave Street',
+  city: 'New York',
+  zipCode: 7002 }
+ db.address.deleteMany({city:"New York"})
+}
+
+
+>db.address.deleteMany({city:"New York"})
+<{ acknowledged: true, deletedCount: 1 }
